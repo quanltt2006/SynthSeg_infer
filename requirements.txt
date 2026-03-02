@@ -1,0 +1,24 @@
+# --- Core Deep Learning Framework ---
+tensorflow==2.13.0
+keras==2.13.1
+h5py==3.11.0
+
+# --- Medical Imaging & Data Processing ---
+nibabel==5.2.1
+surfa==0.6.3
+SimpleITK==2.4.1
+numpy==1.23.5
+scipy==1.10.1
+pillow==10.4.0
+
+# --- Utilities & Dependencies ---
+absl-py==2.3.1
+six==1.17.0
+typing_extensions==4.5.0
+packaging==26.0
+wrapt==2.0.1
+protobuf==4.25.8
+
+# --- Optional (For Metadata/Logging) ---
+tensorboard==2.13.0
+requests==2.32.4
