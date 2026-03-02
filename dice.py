@@ -3,7 +3,6 @@ import numpy as np
 import os
 
 def fast_dice(x, y, labels):
-    """Tính toán chỉ số Dice nhanh cho danh sách các nhãn"""
     if len(labels) > 1:
         labels_sorted = np.sort(labels)
         label_edges = np.sort(np.concatenate([labels_sorted - 0.1, labels_sorted + 0.1]))
@@ -17,9 +16,7 @@ def fast_dice(x, y, labels):
         return np.array([2 * np.sum((x == labels[0]) * (y == labels[0])) / (np.sum(x == labels[0]) + np.sum(y == labels[0]) + 1e-5)])
 
 if __name__ == "__main__":
-    # --- CÀI ĐẶT ĐƯỜNG DẪN TRỰC TIẾP TẠI ĐÂY ---
-    # Tôi để mặc định là so sánh kết quả SynthSeg v1 với file aseg truyền thống
-    # Nếu bạn chưa có aseg.mgz, hãy đổi tên 'aseg.mgz' thành file bạn muốn so sánh
+
     path_gt = "frs/synthseg_v1.mgz" 
     path_seg = "synthseg_outputs/segmentations/orig_synthseg.mgz"
 
@@ -39,7 +36,6 @@ if __name__ == "__main__":
         if img1.shape != img2.shape:
             print(f"Lỗi: Kích thước không khớp! {img1.shape} vs {img2.shape}")
         else:
-            # Lấy danh sách các nhãn (bỏ qua nhãn 0)
             labels = np.unique(img1)
             labels = labels[labels != 0]
 
@@ -52,7 +48,6 @@ if __name__ == "__main__":
             print(f"SEG: {path_seg}")
             print("="*40)
             
-            # Hiển thị kết quả từng nhãn (rút gọn nếu quá nhiều)
             for i, label in enumerate(labels):
                 print(f"Nhãn {int(label):3d}: {scores[i]:.4f}")
 
