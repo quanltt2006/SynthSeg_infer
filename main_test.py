@@ -2,17 +2,11 @@ import os
 import sys
 import glob
 
-# ============================================================
-# ⚙️  CẤU HÌNH - Chỉnh sửa các đường dẫn tại đây
-# ============================================================
 
-# THAY ĐỔI: Đường dẫn đến THƯ MỤC chứa nhiều file ảnh
 INPUT_DIR = './data' 
 
-# Thư mục gốc của SynthSeg
 SYNTHSEG_ROOT = '.'   
 
-# Đường dẫn đến file model và nhãn
 PATH_MODEL = 'synthseg_1.0.h5'
 PATH_SEG_LABELS  = 'synthseg_segmentation_labels.npy'
 PATH_SEG_NAMES   = 'synthseg_segmentation_names.npy'
@@ -21,9 +15,7 @@ PATH_TOPO_CLASSES = 'synthseg_topological_classes.npy'
 # Thư mục output chung
 OUTPUT_DIR = './synthseg_batch_outputs'
 
-# ============================================================
-# ⚙️  THAM SỐ MÔ HÌNH (Giữ nguyên)
-# ============================================================
+
 CROPPING         = 192
 TARGET_RES       = 1.0
 FLIP             = True
@@ -37,9 +29,7 @@ UNET_FEAT_COUNT  = 24
 FEAT_MULTIPLIER  = 2
 ACTIVATION       = 'elu'
 
-# ============================================================
-# 🚀  CHẠY BATCH
-# ============================================================
+
 
 def main():
     # 1. Setup môi trường
@@ -49,7 +39,7 @@ def main():
 
     # 2. Kiểm tra folder input và các file model
     if not os.path.isdir(INPUT_DIR):
-        print(f"❌ Không tìm thấy thư mục đầu vào: {INPUT_DIR}")
+        print(f"Không tìm thấy thư mục đầu vào: {INPUT_DIR}")
         sys.exit(1)
 
     # Tìm tất cả file ảnh hỗ trợ
@@ -59,10 +49,10 @@ def main():
         image_files.extend(glob.glob(os.path.join(INPUT_DIR, ext)))
 
     if not image_files:
-        print(f"❌ Không tìm thấy file .nii, .nii.gz hoặc .mgz nào trong {INPUT_DIR}")
+        print(f" Không tìm thấy file .nii, .nii.gz hoặc .mgz nào trong {INPUT_DIR}")
         sys.exit(1)
 
-    print(f"🔍 Tìm thấy {len(image_files)} file cần xử lý.")
+    print(f" Tìm thấy {len(image_files)} file cần xử lý.")
 
     # 3. Tạo thư mục output
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -75,7 +65,7 @@ def main():
     try:
         from predict import predict
     except ImportError as e:
-        print(f"\n❌ Không thể import SynthSeg: {e}")
+        print(f"\n Không thể import SynthSeg: {e}")
         sys.exit(1)
 
     # 5. Vòng lặp xử lý từng file
@@ -96,7 +86,7 @@ def main():
 
         # Kiểm tra nếu đã tồn tại thì bỏ qua (nếu muốn chạy lại từ đầu thì comment phần này)
         if os.path.exists(path_seg):
-            print(f"   ⏩ Đã tồn tại kết quả cho {basename}, bỏ qua.")
+            print(f"   Đã tồn tại kết quả cho {basename}, bỏ qua.")
             continue
 
         try:
@@ -127,12 +117,13 @@ def main():
             )
             print(f"   ✅ Xong: {basename}")
         except Exception as e:
-            print(f"   ❌ Lỗi khi xử lý {basename}: {e}")
+            print(f"   Lỗi khi xử lý {basename}: {e}")
 
     print("\n" + "="*30)
-    print("🏁 TẤT CẢ ĐÃ HOÀN THÀNH!")
+    print(" TẤT CẢ ĐÃ HOÀN THÀNH!")
     print(f"Kết quả lưu tại: {os.path.abspath(OUTPUT_DIR)}")
     print("="*30)
 
 if __name__ == '__main__':
+
     main()
